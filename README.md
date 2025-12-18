@@ -57,12 +57,33 @@ O sistema foi desenvolvido como **exercício avançado de C++** e **prática de 
 
 ## Como executar
 
+Clone o repositório:
+
 ```bash
 git clone https://github.com/PedroAndradeXD/sistema-gerenciamento.git
 ```
+
+Acesse a pasta raiz do projeto:
+
 ```bash
-g++ -std=c++17 -o app main.cpp UserRepository.cpp UserService.cpp
-./app
+cd sistema-gerenciamento
+```
+
+Compile o projeto:
+
+```bash
+g++ -std=c++17 -Wall -Wextra -g3 \
+src/main.cpp \
+src/domain/User.cpp \
+src/repository/UserRepository.cpp \
+src/service/UserService.cpp \
+-o output/main.exe
+```
+
+Execute:
+
+```bash
+./output/main.exe
 ```
 
 Nota: atualmente os dados são armazenados apenas em memória.
@@ -70,3 +91,4 @@ Nota: atualmente os dados são armazenados apenas em memória.
 Autor
 
 Pedro Andrade
+
