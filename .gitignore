@@ -1,0 +1,19 @@
+# Build output
+output/
+*.exe
+*.o
+*.obj
+
+# VS Code settings and tasks
+.vscode/
+.vscode/tasks.json
+tasks.jason
+tasks.json
+
+# Logs and temp
+*.log
+*.tmp
+
+# IDE/project files
+*.user
+*.suo
