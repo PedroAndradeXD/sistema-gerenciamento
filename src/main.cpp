@@ -41,7 +41,6 @@ void showCreateUser(UserService& service) {
     }
 }
 
-
 // Exibe a interface de atualização de usuário no terminal
 // Coleta os dados, chama o serviço e trata os possíveis resultados
 void showUpdateUser(UserService& service) {
@@ -81,6 +80,7 @@ void showUpdateUser(UserService& service) {
     }
 }
 
+// Exibe a interface para desabilitar usuário
 void showDisableUser(UserService& service) {
     int id;
 
@@ -99,6 +99,7 @@ void showDisableUser(UserService& service) {
     }
 }
 
+// Exibe a interface para habilitar usuário
 void showEnableUser(UserService& service) {
     int id;
 
@@ -117,14 +118,17 @@ void showEnableUser(UserService& service) {
     }
 }
 
+// Exibe a interface que lista todos os usuários cadastrados
 void showListUsers(UserService& service) {
     std::vector<User> users = service.listUsers();
 
+    // Retorno em caso de lista de usuários vazia
     if (users.empty()) {
         std::cout << "Nenhum usuário cadastrado.\n";
         return;
     }
 
+    // Exibição das informações do usuário
     for(const auto& user : users) {
         std::cout << "ID: " << user.getId()
         << " | Nome: " << user.getName()
