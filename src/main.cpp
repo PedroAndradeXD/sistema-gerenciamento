@@ -117,6 +117,23 @@ void showEnableUser(UserService& service) {
     }
 }
 
+void showListUsers(UserService& service) {
+    std::vector<User> users = service.listUsers();
+
+    if (users.empty()) {
+        std::cout << "Nenhum usuário cadastrado.\n";
+        return;
+    }
+
+    for(const auto& user : users) {
+        std::cout << "ID: " << user.getId()
+        << " | Nome: " << user.getName()
+        << " | Email: " << user.getEmail()
+        << " | Status: " << (user.isActive() ? "Ativo" : "Inativo")
+        << "\n";
+    }
+}
+
 int main() {
     UserRepository repo; //Cria o repositório
     UserService service(repo); //Passa o repositório para o service
@@ -141,7 +158,7 @@ int main() {
             showEnableUser(service);
             break;
         case 5:
-            // list
+            showListUsers(service);
             break;
         case 0:
             std::cout << "Encerrando programa...\n";
