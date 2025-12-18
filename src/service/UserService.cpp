@@ -72,11 +72,11 @@ bool UserService::createUser(const std::string& name, const std::string& email) 
 }
 
  // Torna o usuário inativo (aplica regra de negócios)
-void UserService::disableUser(int id) {
+bool UserService::disableUser(int id) {
     // Busca usuário pelo ID
     auto userOpt = userRepository.findById(id);
     if (!userOpt) {
-        return;
+        return false;
     }
 
     // Cria uma cópia mutável do usuário
@@ -87,14 +87,16 @@ void UserService::disableUser(int id) {
 
     // Salva a alteração no repositório
     userRepository.save(user);
+
+    return true;
 }
 
 // Torna o usuário ativo (aplica regra de negócios)
-void UserService::enableUser(int id) {
+bool UserService::enableUser(int id) {
     // Busca usuário pelo ID
     auto userOpt = userRepository.findById(id);
     if (!userOpt) {
-        return;
+        return false;
     }
 
     // Cria uma cópia mutável do usuário
@@ -105,6 +107,8 @@ void UserService::enableUser(int id) {
 
     // Salva a alteração no repositório
     userRepository.save(user);
+
+    return true;
 }
 
 // Retorna todos os usuários cadastrados

@@ -34,7 +34,6 @@ void showCreateUser(UserService& service) {
     std::getline(std::cin, email);
 
     // Tenta criar o usuário através da camada de serviço
-    // O retorno indica se a criação foi bem-sucedida ou não
     if (service.createUser(name, email)) {
         std::cout << "Usuário criado com sucesso.\n";
     } else {
@@ -66,7 +65,6 @@ void showUpdateUser(UserService& service) {
     std::getline(std::cin, email);
 
     // Executa a atualização através da camada de serviço
-    // O retorno indica o resultado da operação
     UpdateUserResult result = service.updateUser(id, name, email);
 
     // Trata o resultado da atualização com mensagens específicas
@@ -80,6 +78,42 @@ void showUpdateUser(UserService& service) {
         case UpdateUserResult::EMAIL_ALREADY_EXISTS:
             std::cout << "Email já em uso.\n";
             break;
+    }
+}
+
+void showDisableUser(UserService& service) {
+    int id;
+
+    // Solicita o ID do usuário
+    std::cout << "Informe o ID do usuário: ";
+    std::cin >> id;
+
+    // Limpa o buffer de entrada para evitar problemas com getline
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    // Tenta desabilitar o usuário via camada de serviço
+    if (service.disableUser(id)) {
+        std::cout << "Usuário desabilitado com sucesso.\n";
+    } else {
+        std::cout << "Usuário não encontrado.\n";
+    }
+}
+
+void showEnableUser(UserService& service) {
+    int id;
+
+    // Solicita o ID do usuário a ter o status modificado
+    std::cout << "Informe o ID do usuário: ";
+    std::cin >> id;
+
+    // Limpa o buffer de entrada para evitar problemas com getline
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    // Tenta habilitar o usuário através da camada de serviço
+    if (service.enableUser(id)) {
+        std::cout << "Usuário habilitado com sucesso.\n";
+    } else {
+        std::cout << "Usuário não encontrado.\n";
     }
 }
 
@@ -101,10 +135,10 @@ int main() {
             showUpdateUser(service);
             break;
         case 3:
-            // disable
+            showDisableUser(service);
             break;
         case 4:
-            // enable
+            showEnableUser(service);
             break;
         case 5:
             // list
@@ -117,5 +151,4 @@ int main() {
     }
 
     } while (option != 0);
-
-    }
+}

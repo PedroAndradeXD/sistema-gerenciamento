@@ -35,10 +35,10 @@ class UserService {
          UpdateUserResult updateUser(int id, const std::string& newName, const std::string& email);
 
         // Torna o usuário inativo (aplica regra de negócios)
-        void disableUser(int id);
+        bool disableUser(int id);
 
         // Torna o usuário ativo (aplica regra de negócios)
-        void enableUser(int id);
+        bool enableUser(int id);
 
         // Retorna todos os usuários cadastrados
         std::vector<User> listUsers() const;
