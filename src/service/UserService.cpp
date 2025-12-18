@@ -42,11 +42,11 @@ bool UserService::createUser(const std::string& name, const std::string& email) 
 }
 
 // Atualiza o nome e/ou email de um usuário existente
-void UserService::updateUser(int id, const std::string& newName, const std::string& newEmail) {
+ UpdateUserResult UserService::updateUser(int id, const std::string& newName, const std::string& newEmail) {
     // Busca usuário pelo ID
     auto userOpt = userRepository.findById(id);
     if (!userOpt) {
-        return;
+        return UpdateUserResult::ID_NOT_FOUND;
     }
 
     // Cria uma cópia mutável do usuário
@@ -55,7 +55,7 @@ void UserService::updateUser(int id, const std::string& newName, const std::stri
     // Atualiza o email se necessário e verifica duplicidade
     if (newEmail != user.getEmail()) {
         if (userRepository.findByEmail(newEmail)) {
-            return;
+            return UpdateUserResult::EMAIL_ALREADY_EXISTS;
         }
         user.setEmail(newEmail);
     }
@@ -67,6 +67,8 @@ void UserService::updateUser(int id, const std::string& newName, const std::stri
 
     // Salva alterações no repositório
     userRepository.save(user);
+
+    return UpdateUserResult::SUCCESS;
 }
 
  // Torna o usuário inativo (aplica regra de negócios)

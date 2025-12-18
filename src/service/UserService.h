@@ -8,6 +8,13 @@
 
 class UserRepository;
 
+// Resultados possíveis da atualização de usuário
+enum class UpdateUserResult {
+    SUCCESS,
+    ID_NOT_FOUND,
+    EMAIL_ALREADY_EXISTS
+};
+
 // Gerencia a lógica e as regras de negócio do sistema
 class UserService {
     private:
@@ -25,7 +32,7 @@ class UserService {
         bool createUser(const std::string& name, const std::string& newEmail);
 
         // Atualiza o nome e/ou email de um usuário existente
-        void updateUser(int id, const std::string& newName, const std::string& email);
+         UpdateUserResult updateUser(int id, const std::string& newName, const std::string& email);
 
         // Torna o usuário inativo (aplica regra de negócios)
         void disableUser(int id);

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <limits>
 
 #include "domain/User.h"
 #include "repository/UserRepository.h"
@@ -18,19 +19,67 @@ void showMenu() {
     std::cout << "Escolha uma opção: ";
 }
 
-// Função para exibir método createUser
+// Exibe a interface de criação de usuário no terminal
+// Responsável apenas por coletar dados e delegar a criação ao UserService
 void showCreateUser(UserService& service) {
+    // Variáveis para armazenar os dados informados pelo usuário
     std::string name, email;
 
+    // Solicita o nome do usuário
     std::cout << "Informe o nome do usuário: ";
     std::getline(std::cin, name);
+    
+    // Solicita o email do usuário
     std::cout << "Informe o email do usuário: ";
     std::getline(std::cin, email);
 
+    // Tenta criar o usuário através da camada de serviço
+    // O retorno indica se a criação foi bem-sucedida ou não
     if (service.createUser(name, email)) {
-        std::cout << "Usuário criado com sucesso!\n";
+        std::cout << "Usuário criado com sucesso.\n";
     } else {
         std::cout << "Email já cadastrado.\n";
+    }
+}
+
+
+// Exibe a interface de atualização de usuário no terminal
+// Coleta os dados, chama o serviço e trata os possíveis resultados
+void showUpdateUser(UserService& service) {
+    // Variáveis para armazenar os dados informados pelo usuário
+    int id;
+    std::string name, email;
+
+    // Solicita o ID do usuário a ser atualizado
+    std::cout << "Informe o ID do usuário: ";
+    std::cin >> id;
+
+    // Limpa o buffer de entrada para evitar problemas com getline
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    // Solicita o novo nome do usuário
+    std::cout << "Informe o nome do usuário: ";
+    std::getline(std::cin, name);
+    
+    // Solicita o novo email do usuário
+    std::cout << "Informe o email do usuário: ";
+    std::getline(std::cin, email);
+
+    // Executa a atualização através da camada de serviço
+    // O retorno indica o resultado da operação
+    UpdateUserResult result = service.updateUser(id, name, email);
+
+    // Trata o resultado da atualização com mensagens específicas
+    switch (result) {
+        case UpdateUserResult::SUCCESS:
+            std::cout << "Usuário atualizado com sucesso.\n";
+            break;
+        case UpdateUserResult::ID_NOT_FOUND:
+            std::cout << "Usuário não encontrado.\n";
+            break;
+        case UpdateUserResult::EMAIL_ALREADY_EXISTS:
+            std::cout << "Email já em uso.\n";
+            break;
     }
 }
 
@@ -42,14 +91,14 @@ int main() {
     do {
     showMenu();
     std::cin >> option;
-    std::cin.ignore();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     switch (option) {
         case 1:
             showCreateUser(service);
             break;
         case 2:
-            // update
+            showUpdateUser(service);
             break;
         case 3:
             // disable
