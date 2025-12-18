@@ -3,7 +3,8 @@
 
 #include <string>
 #include <vector>
-#include "User.h"
+
+#include "../domain/User.h"
 
 class UserRepository;
 
@@ -21,7 +22,7 @@ class UserService {
         : userRepository(userRepository) {}
 
         // Cria um novo usuário com nome e email, garantindo unicidade de email
-        void createUser(const std::string& name, const std::string& newEmail);
+        bool createUser(const std::string& name, const std::string& newEmail);
 
         // Atualiza o nome e/ou email de um usuário existente
         void updateUser(int id, const std::string& newName, const std::string& email);

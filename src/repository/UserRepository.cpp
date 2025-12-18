@@ -1,5 +1,5 @@
 #include "UserRepository.h"
-#include "User.h"
+#include "../domain/User.h"
 
 // Salva ou atualiza um usuário no repositório
 void UserRepository::save(const User& user) {

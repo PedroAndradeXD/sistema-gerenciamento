@@ -1,5 +1,5 @@
 #include "UserService.h"
-#include "UserRepository.h"
+#include "../repository/UserRepository.h"
 
 #include <algorithm>
 
@@ -24,11 +24,11 @@ int UserService::generateNextId() {
     return maxId + 1;
 }
 
-// Cria um novo usuário com nome e email
-void UserService::createUser(const std::string& name, const std::string& email) {
+// Cria um novo usuário se o email não estiver em uso
+bool UserService::createUser(const std::string& name, const std::string& email) {
     // Verifica se o email já está em uso
     if (userRepository.findByEmail(email)) {
-        return;
+        return false;
     }
 
     // Gera o próximo ID e cria o usuário
@@ -37,6 +37,8 @@ void UserService::createUser(const std::string& name, const std::string& email) 
 
     // Salva o usuário no repositório
     userRepository.save(user);
+
+    return true;
 }
 
 // Atualiza o nome e/ou email de um usuário existente
